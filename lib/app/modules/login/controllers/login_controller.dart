@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:latihan/app/routes/servis/auth_service.dart';
 import '../../../routes/app_pages.dart';
 
 class LoginController extends GetxController {
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final isPasswordHidden = true.obs;
+  final isLoading = false.obs;
+  final errorMessage = ''.obs;
 
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
-  void loginUser() {
-    final email = emailController.text.trim();
+  Future<void> loginUser() async {
+    final email = usernameController.text.trim(); // dianggap email
     final password = passwordController.text;
 
     if (email.isEmpty || password.isEmpty) {
-      Get.snackbar('Error', 'Email dan password wajib diisi',
-          snackPosition: SnackPosition.BOTTOM);
+      errorMessage.value = 'Email dan password wajib diisi';
       return;
     }
 
-    // Simulasi login sukses
-    if (email == "lida@gmail.com" && password == "lida12345") {
+    isLoading.value = true;
+    errorMessage.value = '';
+
+    final result = await AuthService.login(email, password);
+
+    isLoading.value = false;
+
+    if (result['success']) {
       Get.offAllNamed(Routes.HOME);
     } else {
-      Get.snackbar('Login Gagal', 'Email atau password salah',
-          snackPosition: SnackPosition.BOTTOM);
+      errorMessage.value = result['message'] ?? 'Login gagal';
     }
   }
 
   @override
   void onClose() {
-    emailController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
     super.onClose();
   }

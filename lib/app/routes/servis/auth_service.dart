@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
-  static const baseUrl = 'http://127.0.0.1:5000 ';
+  static const baseUrl = 'http://127.0.0.1:5000'; // Ganti jika pakai emulator
 
   // REGISTER
   static Future<Map<String, dynamic>> register(
@@ -42,13 +42,13 @@ class AuthService {
 
   // LOGIN
   static Future<Map<String, dynamic>> login(
-      String username, String password) async {
+      String email, String password) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'username': username, // 🟢 SESUAI BACKEND
+          'email': email, // ✅ sudah cocok dengan backend
           'password': password,
         }),
       );

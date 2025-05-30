@@ -13,7 +13,7 @@ class LoginView extends GetView<LoginController> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Get.offNamed(Routes.WELCOME); // navigasi ke welcome
+            Get.offNamed(Routes.WELCOME);
           },
         ),
         title: const Text('Login'),
@@ -28,7 +28,7 @@ class LoginView extends GetView<LoginController> {
           children: [
             const SizedBox(height: 30),
             TextField(
-              controller: controller.emailController,
+              controller: controller.usernameController,
               decoration: const InputDecoration(
                 labelText: 'Email',
                 hintText: 'example@gmail.com',
@@ -50,18 +50,33 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                 )),
+            const SizedBox(height: 16),
+            Obx(() => controller.errorMessage.value.isNotEmpty
+                ? Text(
+                    controller.errorMessage.value,
+                    style: const TextStyle(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  )
+                : const SizedBox()),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: controller.loginUser,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-              ),
-              child: const Text(
-                'Login',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            Obx(() => ElevatedButton(
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : controller.loginUser,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: controller.isLoading.value
+                      ? const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : const Text(
+                          'Login',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                )),
           ],
         ),
       ),

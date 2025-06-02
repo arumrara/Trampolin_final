@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
-  static const baseUrl = 'http://127.0.0.1:5000'; // Ganti jika pakai emulator
+  static const baseUrl = 'http://192.168.71.240:5000'; // Ganti jika pakai emulator
 
   // REGISTER
   static Future<Map<String, dynamic>> register(

@@ -1,58 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/profile_controller.dart';
+import 'package:latihan/app/modules/profile/controllers/profile_controller.dart';
 
-class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
-
-  Widget buildProfileItem(IconData icon, String label, String value) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.deepPurple),
-      title: Text(label),
-      subtitle: Text(value, style: const TextStyle(color: Colors.grey)),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () {}, // bisa diarahkan ke halaman edit nanti
-    );
-  }
+class ProfileView extends StatelessWidget {
+  final ProfileController controller = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Profile"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 24),
-            const CircleAvatar(
-              radius: 40,
-              backgroundImage: AssetImage('assets/minion.png'), // ganti sesuai file kamu
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Lida',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            const SizedBox(height: 4),
-            const Text(
-              'lida@gmail.com',
-              style: TextStyle(color: Colors.grey),
-            ),
-            const SizedBox(height: 24),
-            const Divider(),
-            buildProfileItem(Icons.email, "Email", "lida@gmail.com"),
-            buildProfileItem(Icons.phone, "Nomer HP", "(307) 555-0133"),
-            buildProfileItem(Icons.lock, "Change Password", "*********"),
-          ],
-        ),
-      ),
+      appBar: AppBar(title: Text('Profile')),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.user.isEmpty) {
+          return Center(child: Text('Data profil tidak ditemukan'));
+        }
+
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Username: ${controller.user['username'] ?? ''}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Email: ${controller.user['email'] ?? ''}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Created at: ${controller.user['created_at'] ?? ''}', style: TextStyle(fontSize: 16)),
+              SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () {
+                  controller.logout();
+                },
+                child: Text('Logout'),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }

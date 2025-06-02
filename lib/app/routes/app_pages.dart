@@ -42,7 +42,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(

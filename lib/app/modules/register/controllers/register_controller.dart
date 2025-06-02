@@ -14,65 +14,71 @@ class RegisterController extends GetxController {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
-  void registerUser() async {
-    final name = nameController.text.trim();
-    final email = emailController.text.trim();
-    final password = passwordController.text;
+void registerUser() async {
+  final name = nameController.text.trim();
+  final email = emailController.text.trim();
+  final password = passwordController.text;
 
-    if (name.isEmpty || email.isEmpty || password.length < 8) {
+  if (name.isEmpty || email.isEmpty || password.length < 8) {
+    Get.snackbar(
+      "Error",
+      "Semua field harus diisi dengan benar, dan password minimal 8 karakter",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+    return;
+  }
+
+  try {
+    final response = await http.post(
+      Uri.parse("http://192.168.229.125:5000/register"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "username": name,
+        "email": email,
+        "password": password,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 201) {
+      Get.snackbar(
+        "Sukses",
+        data['message'] ?? "Registrasi berhasil. Silakan login.",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+
+      nameController.clear();
+      emailController.clear();
+      passwordController.clear();
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      Get.offNamed('/login');
+    } else {
       Get.snackbar(
         "Error",
-        "Semua field harus diisi dengan benar",
+        data['message'] ?? data['error'] ?? "Gagal registrasi",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      return;
     }
-
-    try {
-      final response = await http.post(
-        Uri.parse("http://10.0.2.2:5000/register"), // Ganti sesuai device
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "username": email,
-          "password": password,
-          "name": name
-        }),
-      );
-
-      if (response.statusCode == 201) {
-        Get.snackbar(
-          "Sukses",
-          "Registrasi berhasil. Silakan login.",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-
-        // Clear input
-        nameController.clear();
-        emailController.clear();
-        passwordController.clear();
-
-        await Future.delayed(const Duration(seconds: 1));
-
-        // Navigasi ke halaman login
-        Get.offNamed('/login'); // Pastikan route ini sudah dibuat
-      } else {
-        final error = jsonDecode(response.body)['error'] ?? "Gagal registrasi";
-        Get.snackbar("Error", error,
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white);
-      }
-    } catch (e) {
-      Get.snackbar("Error", "Terjadi kesalahan koneksi",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
-    }
+  } catch (e) {
+    Get.snackbar(
+      "Error",
+      "Terjadi kesalahan koneksi",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
   }
+}
+
 
   @override
   void onClose() {

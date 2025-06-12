@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
-import '../../../routes/app_pages.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
-  Widget buildCard(String title, String description, String imageAsset, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
-              Image.asset(imageAsset, width: 60, height: 60),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
-                    const SizedBox(height: 4),
-                    Text(description, style: const TextStyle(fontSize: 13)),
-                  ],
-                ),
-              )
-            ],
+  Widget buildManfaatCard(String title, String desc) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.lightBlue,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.white,
+            ),
           ),
-        ),
+          const SizedBox(height: 4),
+          Text(
+            desc,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ],
       ),
     );
   }
@@ -41,45 +37,82 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8F8F8),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         onTap: (index) {
           if (index == 1) {
-            // Tambahkan navigasi ke fitur scan jika tersedia
+            Get.toNamed('/article');
           } else if (index == 2) {
-            Get.toNamed(Routes.PROFILE); // Navigasi ke halaman profile
+            Get.toNamed('/deteksi');
+          } else if (index == 3) {
+            Get.toNamed('/guide');
+          } else if (index == 4) {
+            Get.toNamed('/profile');
           }
         },
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.article), label: "Artikel"),
           BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: "Deteksi"),
+          BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: "Panduan"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
       body: SafeArea(
-        child: ListView(
-          children: [
-            buildCard(
-              "Artikel",
-              "Temukan berbagai artikel informatif seputar trampolin—mulai dari manfaat kesehatan, teknik melompat yang aman, hingga tips memilih trampolin terbaik.",
-              "assets/trampolin.png",
-              onTap: () => Get.toNamed(Routes.ARTICLE), // Navigasi ke halaman Artikel
-            ),
-            buildCard(
-              "Panduan Lengkap untuk Pemula",
-              "Pelajari dasar-dasar trampolin mulai dari posisi tubuh yang benar hingga teknik lompatan pertama secara bertahap.",
-              "assets/trampolin.png",
-              onTap: () => Get.toNamed(Routes.GUIDE), // Navigasi ke halaman Panduan
-            ),
-            buildCard(
-              "Deteksi Gerakan Pintar",
-              "Lacak setiap gerakan saat berlatih trampolin secara langsung menggunakan kamera perangkatmu.",
-              "assets/trampolin.png",
-              onTap: () {
-                // Tambahkan navigasi jika ada halaman deteksi
-              },
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              const Text(
+                "Manfaat\nOLAH RAGA TRAMPOLIN",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  height: 1.3,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 1,
+                  children: [
+                    buildManfaatCard(
+                      "Bikin Badan Bugar!",
+                      "Melompat di trampolin bantu jantung lebih sehat dan tubuh jadi lebih kuat.",
+                    ),
+                    Image.asset(
+                      'assets/images/women.png',
+                      fit: BoxFit.cover,
+                    ),
+                    buildManfaatCard(
+                      "Bye-bye Stres!",
+                      "Rasa senang waktu melompat bisa bantu hilangkan stres dan bikin hati jadi ceria.",
+                    ),
+                    buildManfaatCard(
+                      "Bakar Kalori Tanpa Bosan!",
+                      "Lebih seru daripada lari, tapi tetap bikin tubuh sehat dan berat badan terjaga.",
+                    ),
+                    Image.asset(
+                      'assets/images/man.png',
+                      fit: BoxFit.cover,
+                    ),
+                    buildManfaatCard(
+                      "Tidur Lebih Nyenyak",
+                      "Setelah aktif bergerak, tubuh lebih rileks dan tidur pun jadi lebih berkualitas.",
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

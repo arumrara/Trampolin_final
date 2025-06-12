@@ -8,7 +8,7 @@ class ProfileController extends GetxController {
   var isLoading = false.obs;
   var user = {}.obs;
 
-  final String profileUrl = "http://192.168.71.240:5000/profile"; // Ganti dengan IP backend kamu
+  final String profileUrl = "https://backend-trampolin.vercel.app/profile"; // Ganti dengan IP backend kamu
 
   @override
   void onInit() {

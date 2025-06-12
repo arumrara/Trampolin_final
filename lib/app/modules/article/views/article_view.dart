@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/article_controller.dart';
-import '../../../routes/app_pages.dart';
 
 class ArticleView extends GetView<ArticleController> {
   const ArticleView({Key? key}) : super(key: key);
@@ -10,11 +9,32 @@ class ArticleView extends GetView<ArticleController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Artikel"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Get.offAllNamed(Routes.HOME), // Tombol kembali ke Home
-        ),
+        title: const Text("Artikel Trampolin"),
+        automaticallyImplyLeading: false, // ⛔️ Hapus tombol back
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        onTap: (index) {
+          if (index == 0) {
+            Get.offAllNamed('/home');
+          } else if (index == 2) {
+            Get.offAllNamed('/deteksi');
+          } else if (index == 3) {
+            Get.offAllNamed('/guide');
+          } else if (index == 4) {
+            Get.offAllNamed('/profile');
+          }
+        },
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.article), label: "Artikel"),
+          BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: "Deteksi"),
+          BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: "Panduan"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
       ),
       body: SafeArea(
         child: ListView(
@@ -22,7 +42,7 @@ class ArticleView extends GetView<ArticleController> {
           children: [
             Center(
               child: Image.asset(
-                'assets/trampoline_jump.png', // Ganti sesuai nama file gambar
+                'assets/images/aku.png',
                 width: 200,
                 height: 200,
               ),
@@ -36,29 +56,8 @@ class ArticleView extends GetView<ArticleController> {
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 24),
-            const Text(
-              "Trampolin",
-              style: TextStyle(color: Colors.grey),
-            ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {
-          if (index == 0) {
-            Get.offAllNamed(Routes.HOME);
-          } else if (index == 1) {
-            // Navigasi ke halaman scan (jika ada)
-          } else if (index == 2) {
-            Get.toNamed(Routes.PROFILE);
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code_scanner), label: "Scan"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
       ),
     );
   }

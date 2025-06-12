@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:latihan/app/routes/servis/auth_service.dart';
+import 'package:Trampolin/app/routes/servis/auth_service.dart';
 import '../../../routes/app_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

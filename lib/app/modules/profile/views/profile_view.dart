@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:latihan/app/modules/profile/controllers/profile_controller.dart';
-import 'package:latihan/app/routes/app_pages.dart';
+import 'package:Trampolin/app/modules/profile/controllers/profile_controller.dart';
+import 'package:Trampolin/app/routes/app_pages.dart';
 
 class ProfileView extends StatelessWidget {
   final ProfileController controller = Get.find<ProfileController>();

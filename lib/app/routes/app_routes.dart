@@ -14,4 +14,12 @@ abstract class Routes {
   static const FORGOT_PASSWORD = '/forgot-password';
   static const EDIT_PROFILE = '/edit-profile';
   static const OTP = '/otp';
+
+  static const JUMP_DROP = '/jump-drop';
+  static const SEAT_DROP = '/seat-drop';
+  static const PIKE_JUMP = '/pike-jump';
+  static const TUCK_JUMP = '/tuck-jump';
+  static const STRADDLE_JUMP = '/straddle-jump';
+  static const STREAMLIT_RESULT = '/streamlit-result';
+  static const HISTORY = '/history';
 }

@@ -1,5 +1,15 @@
 import 'package:get/get.dart';
 
+import '../modules/Jump_drop/bindings/jump_drop_binding.dart';
+import '../modules/Jump_drop/views/jump_drop_view.dart';
+import '../modules/Pike_Jump/bindings/pike_jump_binding.dart';
+import '../modules/Pike_Jump/views/pike_jump_view.dart';
+import '../modules/Seat_Drop/bindings/seat_drop_binding.dart';
+import '../modules/Seat_Drop/views/seat_drop_view.dart';
+import '../modules/Straddle_Jump/bindings/straddle_jump_binding.dart';
+import '../modules/Straddle_Jump/views/straddle_jump_view.dart';
+import '../modules/Tuck_jump/bindings/tuck_jump_binding.dart';
+import '../modules/Tuck_jump/views/tuck_jump_view.dart';
 import '../modules/article/bindings/article_binding.dart';
 import '../modules/article/views/article_view.dart';
 import '../modules/deteksi/bindings/deteksi_binding.dart';
@@ -10,6 +20,8 @@ import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/guide/bindings/guide_binding.dart';
 import '../modules/guide/views/guide_view.dart';
+import '../modules/history/bindings/history_binding.dart';
+import '../modules/history/views/history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -20,6 +32,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/streamlit_result/bindings/streamlit_result_binding.dart';
+import '../modules/streamlit_result/views/streamlit_result_view.dart';
 import '../modules/welcome/bindings/welcome_binding.dart';
 import '../modules/welcome/views/welcome_view.dart';
 
@@ -88,6 +102,41 @@ class AppPages {
       name: Routes.OTP,
       page: () => const OtpView(),
       binding: OtpBinding(),
+    ),
+    GetPage(
+      name: Routes.JUMP_DROP,
+      page: () => const JumpDropView(),
+      binding: JumpDropBinding(),
+    ),
+    GetPage(
+      name: Routes.SEAT_DROP,
+      page: () => const SeatDropView(),
+      binding: SeatDropBinding(),
+    ),
+    GetPage(
+      name: Routes.PIKE_JUMP,
+      page: () => const PikeJumpView(),
+      binding: PikeJumpBinding(),
+    ),
+    GetPage(
+      name: Routes.TUCK_JUMP,
+      page: () => const TuckJumpView(),
+      binding: TuckJumpBinding(),
+    ),
+    GetPage(
+      name: Routes.STRADDLE_JUMP,
+      page: () => const StraddleJumpView(),
+      binding: StraddleJumpBinding(),
+    ),
+    GetPage(
+      name: Routes.STREAMLIT_RESULT,
+      page: () => const StreamlitResultView(),
+      binding: StreamlitResultBinding(),
+    ),
+    GetPage(
+      name: Routes.HISTORY,
+      page: () => const HistoryView(),
+      binding: HistoryBinding(),
     ),
   ];
 }

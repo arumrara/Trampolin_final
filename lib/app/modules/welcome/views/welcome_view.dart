@@ -35,7 +35,7 @@ class WelcomeView extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => Get.toNamed('/login'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
+                      backgroundColor: Colors.blueAccent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

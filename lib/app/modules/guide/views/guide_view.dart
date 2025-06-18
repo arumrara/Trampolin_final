@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/guide_controller.dart';
 
@@ -11,20 +10,27 @@ class GuideView extends GetView<GuideController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Panduan Pemula'),
-        automaticallyImplyLeading: false, // ⛔️ Hapus tombol back
+        title: const Text('Panduan'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 1,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3,
+        currentIndex: 2,
         onTap: (index) {
-          if (index == 0) {
-            Get.offAllNamed(Routes.HOME);
-          } else if (index == 1) {
-            Get.offAllNamed(Routes.ARTICLE);
-          } else if (index == 2) {
-            Get.offAllNamed(Routes.DETEKSI);
-          } else if (index == 4) {
-            Get.offAllNamed(Routes.PROFILE);
+          switch (index) {
+            case 0:
+              Get.offAllNamed(Routes.HOME);
+              break;
+            case 1:
+              Get.offAllNamed(Routes.DETEKSI);
+              break;
+            case 2:
+              break;
+            case 3:
+              Get.offAllNamed(Routes.PROFILE);
+              break;
           }
         },
         type: BottomNavigationBarType.fixed,
@@ -32,47 +38,41 @@ class GuideView extends GetView<GuideController> {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: "Artikel"),
           BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: "Deteksi"),
           BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: "Panduan"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 20,
-            runSpacing: 20,
-            children: const [
-              GuideItem(
-                image: 'assets/images/Jumping.png',
-                title: 'Jumping Drop',
-                url: 'https://youtu.be/b45s101imxY',
-              ),
-              GuideItem(
-                image: 'assets/images/Seat_Drop.png',
-                title: 'Seat Drop',
-                url: 'https://www.youtube.com/watch?v=DV4bL_wax0A&pp=ygUUc2VhdCBkcm9wIHRyYW1wb2xpbmU%3D',
-              ),
-              GuideItem(
-                image: 'assets/images/Tuck_Jump.png',
-                title: 'Tuck Jump',
-                url: 'https://www.youtube.com/watch?v=LRJcVZ9AYjI&pp=ygUUdHVjayBqdW1wIHRyYW1wb2xpbmU%3D',
-              ),
-              GuideItem(
-                image: 'assets/images/ike_Jump.png',
-                title: 'Pike Jump',
-                url: 'https://www.youtube.com/watch?v=k8uRTnnzMW8&pp=ygUUcGlrZSBqdW1wIHRyYW1wb2xpbmU%3D',
-              ),
-              GuideItem(
-                image: 'assets/images/Straddle_Jump.png',
-                title: 'Straddle Jump',
-                url: 'https://www.youtube.com/watch?v=PJ-ZTGltpXY&pp=ygUYc3RydWRsbGUganVtcCB0cmFtcG9saW5l',
-              ),
-            ],
+      backgroundColor: const Color(0xFFF9F9F9),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          GuideItem(
+            image: 'assets/images/Jump_Drop.png',
+            title: 'Jump Drop',
+            route: Routes.JUMP_DROP,
           ),
-        ),
+          GuideItem(
+            image: 'assets/images/Seat_Drop.png',
+            title: 'Seat Drop',
+            route: Routes.SEAT_DROP,
+          ),
+          GuideItem(
+            image: 'assets/images/Tuck_Jump.png',
+            title: 'Tuck Jump',
+            route: Routes.TUCK_JUMP,
+          ),
+          GuideItem(
+            image: 'assets/images/Pike_Jump.png',
+            title: 'Pike Jump',
+            route: Routes.PIKE_JUMP,
+          ),
+          GuideItem(
+            image: 'assets/images/Straddle_Jump.png',
+            title: 'Straddle Jump',
+            route: Routes.STRADDLE_JUMP,
+          ),
+        ],
       ),
     );
   }
@@ -81,52 +81,62 @@ class GuideView extends GetView<GuideController> {
 class GuideItem extends StatelessWidget {
   final String image;
   final String title;
-  final String url;
+  final String? route;
 
   const GuideItem({
-    super.key,
+    Key? key,
     required this.image,
     required this.title,
-    required this.url,
-  });
-
-  Future<void> _launchURL() async {
-    final Uri uri = Uri.parse(url);
-
-    try {
-      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-        if (!await launchUrl(uri, mode: LaunchMode.inAppBrowserView)) {
-          Get.snackbar("Error", "Tidak dapat membuka link");
-        }
-      }
-    } catch (e) {
-      Get.snackbar("Error", "Terjadi kesalahan saat membuka link");
-      print("Exception saat membuka URL: $e");
-    }
-  }
+    this.route,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: _launchURL,
-      borderRadius: BorderRadius.circular(16),
-      splashColor: Colors.blue.withOpacity(0.3),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: const Color(0xFFEFEFFF),
-              borderRadius: BorderRadius.circular(16),
+    return GestureDetector(
+      onTap: () {
+        if (route != null) {
+          Get.toNamed(route!);
+        } else {
+          Get.snackbar("Info", "Halaman untuk \"$title\" belum tersedia.");
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
-            child: Image.asset(image, width: 80, height: 80),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ],
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                image,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

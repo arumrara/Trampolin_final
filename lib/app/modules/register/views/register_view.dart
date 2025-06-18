@@ -17,7 +17,7 @@ class RegisterView extends GetView<RegisterController> {
         ),
         title: const Text('Registrasi'),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -97,7 +97,7 @@ class RegisterView extends GetView<RegisterController> {
                 child: ElevatedButton(
                   onPressed: controller.registerUser,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: Colors.blueAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

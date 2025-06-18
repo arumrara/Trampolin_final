@@ -16,7 +16,7 @@ class LoginView extends GetView<LoginController> {
         ),
         title: const Text('Login'),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
       ),
       body: SafeArea(
@@ -78,7 +78,7 @@ class LoginView extends GetView<LoginController> {
                         ? null
                         : controller.loginUser,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
+                      backgroundColor: Colors.blueAccent,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: controller.isLoading.value

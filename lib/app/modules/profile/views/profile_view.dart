@@ -13,20 +13,20 @@ class ProfileView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Profil Saya'),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 4,
+        currentIndex: 3,
         onTap: (index) {
           if (index == 0) {
             Get.offAllNamed('/home');
           } else if (index == 1) {
-            Get.offAllNamed('/article');
-          } else if (index == 3) {
+            Get.offAllNamed('/deteksi');
+          } else if (index == 2) {
             Get.offAllNamed('/guide');
-          } else if (index == 4) {
+          } else if (index == 3) {
             Get.offAllNamed('/profile');
           }
         },
@@ -35,7 +35,6 @@ class ProfileView extends StatelessWidget {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: "Artikel"),
           BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: "Deteksi"),
           BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: "Panduan"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
@@ -54,7 +53,6 @@ class ProfileView extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // Avatar + Nama
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -101,37 +99,85 @@ class ProfileView extends StatelessWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              // Tombol Edit Profil dan Logout
               Column(
                 children: [
                   SizedBox(
                     width: double.infinity,
-                    child:ElevatedButton.icon(
-                  onPressed: () {
-                    Get.toNamed(Routes.EDIT_PROFILE)?.then((_) {
-                      // ✅ Refresh profil setelah kembali dari Edit
-                      controller.fetchProfile();
-                    });
-                  },
-                  icon: const Icon(Icons.edit),
-                  label: const Text('Edit Profil'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.toNamed(Routes.EDIT_PROFILE)?.then((_) {
+                          controller.fetchProfile();
+                        });
+                      },
+                      icon: const Icon(Icons.edit),
+                      label: const Text('Edit Profil'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.toNamed(Routes.STREAMLIT_RESULT);
+                      },
+                      icon: const Icon(Icons.analytics),
+                      label: const Text('Hasil Streamlit'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.toNamed(Routes.HISTORY);
+                      },
+                      icon: const Icon(Icons.history),
+                      label: const Text('History'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 12),
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton.icon(
-                      onPressed: controller.logout,
+                      onPressed: () {
+                        Get.defaultDialog(
+                          title: 'Konfirmasi',
+                          middleText: 'Apakah Anda yakin ingin keluar?',
+                          textConfirm: 'Ya',
+                          textCancel: 'Batal',
+                          confirmTextColor: Colors.white,
+                          onConfirm: () {
+                            Get.back();
+                            controller.logout();
+                          },
+                          onCancel: () {},
+                        );
+                      },
                       icon: const Icon(Icons.logout, color: Colors.black),
                       label: const Text(
                         'Logout',

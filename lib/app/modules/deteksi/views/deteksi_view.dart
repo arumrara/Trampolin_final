@@ -11,7 +11,7 @@ class DeteksiView extends GetView<DeteksiController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Deteksi Gerakan"),
-        automaticallyImplyLeading: false, // ⛔️ Hapus tombol back
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         titleTextStyle: const TextStyle(
@@ -21,15 +21,13 @@ class DeteksiView extends GetView<DeteksiController> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
+        currentIndex: 1,
         onTap: (index) {
           if (index == 0) {
             Get.offAllNamed('/home');
-          } else if (index == 1) {
-            Get.offAllNamed('/article');
-          } else if (index == 3) {
+          } else if (index == 2) {
             Get.offAllNamed('/guide');
-          } else if (index == 4) {
+          } else if (index == 3) {
             Get.offAllNamed('/profile');
           }
         },
@@ -38,7 +36,6 @@ class DeteksiView extends GetView<DeteksiController> {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: "Artikel"),
           BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: "Deteksi"),
           BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: "Panduan"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
@@ -84,7 +81,7 @@ class DeteksiView extends GetView<DeteksiController> {
                     child: ElevatedButton(
                       onPressed: controller.startCamera,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
+                        backgroundColor: Colors.blueAccent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6),
                         ),
@@ -116,7 +113,9 @@ class DeteksiView extends GetView<DeteksiController> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                       ElevatedButton.icon(
@@ -125,7 +124,9 @@ class DeteksiView extends GetView<DeteksiController> {
                         label: const Text('Switch'),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                     ],

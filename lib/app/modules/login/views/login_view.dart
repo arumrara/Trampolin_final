@@ -55,7 +55,6 @@ class LoginView extends GetView<LoginController> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    // Ganti dengan route yang sesuai
                     Get.toNamed('/forgot-password');
                   },
                   child: const Text(
@@ -87,13 +86,43 @@ class LoginView extends GetView<LoginController> {
                             width: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
                         : const Text(
                             'Login',
                             style: TextStyle(color: Colors.white),
                           ),
+                  )),
+
+              const SizedBox(height: 24),
+              const Divider(thickness: 1),
+              const SizedBox(height: 16),
+
+              /// 🔽 Tombol Login Google
+              Obx(() => ElevatedButton.icon(
+                    icon: Icon(Icons.garage),
+                    label: controller.isLoading.value
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          )
+                        : const Text('Login with Google'),
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : controller.loginWithGoogle,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black87,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      side: const BorderSide(color: Colors.grey),
+                    ),
                   )),
             ],
           ),

@@ -135,7 +135,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.HISTORY,
-      page: () => const HistoryView(),
+      page: () => const HistoriView(),
       binding: HistoryBinding(),
     ),
   ];

@@ -1,0 +1,5 @@
+jump_drop
+seat_drop
+tuck_jump
+pike_jump
+straddle_jump

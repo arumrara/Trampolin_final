@@ -23,13 +23,9 @@ class DeteksiView extends GetView<DeteksiController> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
         onTap: (index) {
-          if (index == 0) {
-            Get.offAllNamed('/home');
-          } else if (index == 2) {
-            Get.offAllNamed('/guide');
-          } else if (index == 3) {
-            Get.offAllNamed('/profile');
-          }
+          if (index == 0) Get.offAllNamed('/home');
+          if (index == 2) Get.offAllNamed('/guide');
+          if (index == 3) Get.offAllNamed('/profile');
         },
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
@@ -102,6 +98,17 @@ class DeteksiView extends GetView<DeteksiController> {
                   child: CameraPreview(controller.cameraController!),
                 ),
                 Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Obx(() => Text(
+                    'Prediksi: ${controller.predictedLabel.value}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.brown,
+                    ),
+                  )),
+                ),
+                Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -129,9 +136,28 @@ class DeteksiView extends GetView<DeteksiController> {
                           ),
                         ),
                       ),
+                      Obx(() => ElevatedButton.icon(
+                        onPressed: controller.toggleDetection,
+                        icon: Icon(controller.isDetectionEnabled.value
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        label: Text(controller.isDetectionEnabled.value
+                            ? 'Stop Deteksi'
+                            : 'Mulai Deteksi'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: controller.isDetectionEnabled.value
+                              ? Colors.redAccent
+                              : Colors.green,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                        ),
+                      )),
                     ],
                   ),
                 ),
+
               ],
             );
           }

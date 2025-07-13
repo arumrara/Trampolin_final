@@ -39,7 +39,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/labels/labels.txt
+    - assets/models/labels/labels.txt
     - assets/models/pose_cnn_model.tflite
     - assets/images/gambar.png
     - assets/images/Pike_Jump.png
